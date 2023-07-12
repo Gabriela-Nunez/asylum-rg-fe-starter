@@ -1,8 +1,8 @@
 import React from 'react';
 // ADD IMPORTS BACK FOR GRAPHS SECTION
-// import GrantRatesByOfficeImg from '../../../styles/Images/bar-graph-no-text.png';
-// import GrantRatesByNationalityImg from '../../../styles/Images/pie-chart-no-text.png';
-// import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png';
+import GrantRatesByOfficeImg from '../../../styles/Images/bar-graph-no-text.png';
+import GrantRatesByNationalityImg from '../../../styles/Images/pie-chart-no-text.png';
+import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png';
 import HrfPhoto from '../../../styles/Images/paper-stack.jpg';
 import '../../../styles/RenderLandingPage.less';
 import { Button } from 'antd';
@@ -31,8 +31,33 @@ function RenderLandingPage(props) {
         </div>
       </div>
 
-      {/* Graphs Section: Add code here for the graphs section for your first ticket */}
-      {/* <div className="graphs-section"> */}
+      <section className="graphs-section">
+        <div className="first-graph">
+          <img
+            className="bar-graph"
+            src={GrantRatesByOfficeImg}
+            alt="search grant rates by office bar graph"
+          />
+          <h2>Search Grant Rates By Office</h2>
+        </div>
+        <div className="second-graph">
+          <img
+            className="pie-chart-graph"
+            src={GrantRatesByNationalityImg}
+            alt="search grant rates by nationality pie chart graph"
+          />
+          <h2>Search Grant Rates By Nationality</h2>
+        </div>
+        <div className="third-graph">
+          <img
+            className="line-graph"
+            src={GrantRatesOverTimeImg}
+            alt="search grant rates over time line graph"
+          />
+          <h2>Search Grant Rates Over Time</h2>
+        </div>
+      </section>
+
       <div className="view-more-data-btn-container">
         <Button
           type="default"
