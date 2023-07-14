@@ -124,6 +124,23 @@ function RenderLandingPage(props) {
             </div>
           </div>
         </div>
+
+        <a
+          href="https://humanrightsfirst.org/library/uscis-records-reveal-systemic-disparities-in-asylum-decisions/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <div className="read-more-btn">
+            <button
+              className="centered-button"
+              type="button"
+              style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+            >
+              Read More
+            </button>
+          </div>
+        </a>
+
         <p onClick={() => scrollToTop()} className="back-to-top">
           Back To Top ^
         </p>
