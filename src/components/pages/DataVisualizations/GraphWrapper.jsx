@@ -50,7 +50,12 @@ function GraphWrapper(props) {
         break;
     }
   }
-  function updateStateWithNewData(years, view, office, stateSettingCallback) {
+  async function updateStateWithNewData(
+    years,
+    view,
+    office,
+    stateSettingCallback
+  ) {
     /*
           _                                                                             _
         |                                                                                 |
@@ -73,38 +78,38 @@ function GraphWrapper(props) {
     
     */
 
-    if (office === 'all' || !office) {
-      axios
-        .get(`https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary`, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-          params: {
-            from: years[0],
-            to: years[1],
-          },
-        })
-        .then(result => {
-          console.log(result);
-          stateSettingCallback(view, office, result.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    } else {
-      axios
-        .get(`https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary`, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-          params: {
-            from: years[0],
-            to: years[1],
-            office: office,
-          },
-        })
-        .then(result => {
-          stateSettingCallback(view, office, result.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
-        });
+    const url = `https://hrf-asylum-be-b.herokuapp.com/cases`;
+    const fiscalEndpoint = `${url}/fiscalSummary`;
+    const citizenshipEndpoint = `${url}/citizenshipSummary`;
+
+    const officeParams = {
+      params: {
+        from: years[0],
+        to: years[1],
+        office: office,
+      },
+    };
+
+    const defaultParams = {
+      params: {
+        from: years[0],
+        to: years[1],
+      },
+    };
+
+    const params = office === 'all' || !office ? defaultParams : officeParams;
+
+    try {
+      const [fiscalCall, citizenshipCall] = await Promise.all([
+        axios.get(fiscalEndpoint, params),
+        axios.get(citizenshipEndpoint, params),
+      ]);
+
+      fiscalCall.data['citizenshipResults'] = citizenshipCall.data;
+      console.log(fiscalCall);
+      stateSettingCallback(view, office, [fiscalCall.data]);
+    } catch (error) {
+      console.log('Error fetching data', error);
     }
   }
   const clearQuery = (view, office) => {
