@@ -106,7 +106,6 @@ function GraphWrapper(props) {
       ]);
 
       fiscalCall.data['citizenshipResults'] = citizenshipCall.data;
-      console.log(fiscalCall);
       stateSettingCallback(view, office, [fiscalCall.data]);
     } catch (error) {
       console.log('Error fetching data', error);
