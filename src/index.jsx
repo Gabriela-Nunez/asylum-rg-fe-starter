@@ -7,7 +7,8 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
+import { Auth0Provider } from '@auth0/auth0-react';
+// import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
 
 import 'antd/dist/antd.less';
 import { NotFoundPage } from './components/pages/NotFound';
@@ -27,16 +28,24 @@ import { colors } from './styles/data_vis_colors';
 
 const { primary_accent_color } = colors;
 
+const auth0Config = {
+  domain: process.env.REACT_APP_AUTH0_DOMAIN,
+  clientId: process.env.REACT_APP_AUTH0_CLIENT_ID,
+};
+
 const store = configureStore({ reducer: reducer });
 ReactDOM.render(
   <Router>
-    <Auth0ProviderWithHistory>
+    <Auth0Provider
+      auth0Config={auth0Config}
+      redirectUri={window.location.origin}
+    >
       <Provider store={store}>
         <React.StrictMode>
           <App />
         </React.StrictMode>
       </Provider>
-    </Auth0ProviderWithHistory>
+    </Auth0Provider>
   </Router>,
   document.getElementById('root')
 );
