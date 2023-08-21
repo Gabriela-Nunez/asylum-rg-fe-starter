@@ -7,9 +7,6 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import { Auth0Provider } from '@auth0/auth0-react';
-// import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
-
 import 'antd/dist/antd.less';
 import { NotFoundPage } from './components/pages/NotFound';
 import { LandingPage } from './components/pages/Landing';
@@ -25,27 +22,24 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './state/reducers';
 import { colors } from './styles/data_vis_colors';
+import Auth0ProviderWithHistory from './components/Auth0/Auth0Provider';
+import logoutButton from './components/common/logoutButton';
+import loginButton from './components/common/logoutButton';
 
 const { primary_accent_color } = colors;
-
-const auth0Config = {
-  domain: process.env.REACT_APP_AUTH0_DOMAIN,
-  clientId: process.env.REACT_APP_AUTH0_CLIENT_ID,
-};
 
 const store = configureStore({ reducer: reducer });
 ReactDOM.render(
   <Router>
-    <Auth0Provider
-      auth0Config={auth0Config}
-      redirectUri={window.location.origin}
-    >
+    <Auth0ProviderWithHistory>
       <Provider store={store}>
         <React.StrictMode>
           <App />
+          <loginButton component={loginButton} />
+          <logoutButton component={logoutButton} />
         </React.StrictMode>
       </Provider>
-    </Auth0Provider>
+    </Auth0ProviderWithHistory>
   </Router>,
   document.getElementById('root')
 );
