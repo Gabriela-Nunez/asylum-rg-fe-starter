@@ -33,10 +33,7 @@ function HeaderContent() {
           Graphs
         </Link>
         {isAuthenticated ? (
-          <Link
-            to="/profile-page"
-            style={{ color: '#E2F0F7', paddingRight: '75px' }}
-          >
+          <Link to="/profile-page" style={{ color: '#E2F0F7' }}>
             Profile
           </Link>
         ) : null}
